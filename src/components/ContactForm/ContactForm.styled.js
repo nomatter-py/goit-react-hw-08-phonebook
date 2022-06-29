@@ -1,8 +1,6 @@
 import styled from 'styled-components';
-import { Field} from 'formik';
 
-
-export const Input = styled(Field)`
+export const Input = styled.input`
 position:relative;
 color:${p => p.theme.colors.text};
 `;
