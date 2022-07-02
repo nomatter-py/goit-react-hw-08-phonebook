@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ContactItem } from './Contact.styled';
+import { ContactItem, Button } from './Contact.styled';
 
 export const Contact = ({ id, name, number, deleteHandler }) => {
   return (
@@ -9,9 +9,9 @@ export const Contact = ({ id, name, number, deleteHandler }) => {
         <div>{name}</div>
         <div>{number}</div>
       </div>
-      <button type="button" onClick={() => deleteHandler(id)}>
+      <Button type="button" onClick={() => deleteHandler(id)}>
         delete
-      </button>
+      </Button>
     </ContactItem>
   );
 };

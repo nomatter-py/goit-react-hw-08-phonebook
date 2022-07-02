@@ -2,7 +2,7 @@ import { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Box } from 'components/Box/Box';
-import { Input } from './ContactForm.styled';
+import { Input, Button } from './ContactForm.styled';
 
 const existsInContacts = (name, contacts) => {
   return contacts.find(contact => contact.name === name);
@@ -73,7 +73,7 @@ export default class ContactForm extends Component {
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           />
         </Box>
-        <button type="submit">Add contact</button>
+        <Button type="submit">Add contact</Button>
       </form>
     );
   }
