@@ -9,7 +9,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   body {
 	  margin: 0;  
-    font-family: Montserrat, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    font-family: Poppins, -apple-system, BlinkMacSystemFont, 'Segoe UI',
       Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
       sans-serif;
     background-color: lightgrey;

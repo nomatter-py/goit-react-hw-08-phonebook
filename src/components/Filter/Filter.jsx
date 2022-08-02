@@ -1,16 +1,16 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import actions from '../../redux/contacts/contacts-actions';
 import { FilterBox, FilterInput } from './Filter.styled';
 
-export const Filter = ({ onFilter }) => {
+export const Filter = () => {
+  const dispatch = useDispatch();
   return (
     <FilterBox>
       <h2>Find contacts by name</h2>
-      <FilterInput onChange={e => onFilter(e.target.value)} />
+      <FilterInput onChange={e => dispatch(actions.changeFilter(e.target.value))} />
     </FilterBox>
   );
 }
 
-Filter.propTypes = {
-  onFilter: PropTypes.func.isRequired,
-};
+

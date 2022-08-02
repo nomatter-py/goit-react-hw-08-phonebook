@@ -1,16 +1,19 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Box } from 'components/Box/Box';
-import { Input, Button } from './ContactForm.styled';
+import { Input, Button, Form } from './ContactForm.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import actions from '../../redux/contacts/contacts-actions';
 
 const existsInContacts = (name, contacts) => {
   return contacts.find(contact => contact.name === name);
 };
 
-const ContactForm = ({ onSubmit, contacts }) => {
+const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const dispatch = useDispatch();
+  const contacts = useSelector(state => state.contacts.items);
 
   const handleChange = evt => {
     const { name, value } = evt.target;
@@ -25,7 +28,7 @@ const ContactForm = ({ onSubmit, contacts }) => {
     evt.preventDefault();
 
     if (!existsInContacts(name, contacts)) {
-      onSubmit({ name, number });
+      dispatch(actions.addContact({ name, number }));
       reset();
     } else {
       Notify.failure(`${name} is already in contacts`);
@@ -39,11 +42,11 @@ const ContactForm = ({ onSubmit, contacts }) => {
 
   //const { name, number } = this.state;
   return (
-    <form autoComplete="off" onSubmit={handleSubmit}>
+    <Form autoComplete="off" onSubmit={handleSubmit}>
       <Box
         display="flex"
         justifyContent="space-between"
-        width="400px"
+        flexWrap="wrap"
         pt={5}
         mb={3}
         as="div"
@@ -62,8 +65,8 @@ const ContactForm = ({ onSubmit, contacts }) => {
       <Box
         display="flex"
         justifyContent="space-between"
-        width="400px"
-        mb={3}
+        flexWrap="wrap"
+        mb={4}
         as="div"
       >
         <label htmlFor="number">Number</label>
@@ -77,19 +80,8 @@ const ContactForm = ({ onSubmit, contacts }) => {
         />
       </Box>
       <Button type="submit">Add contact</Button>
-    </form>
+    </Form>
   );
-};
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string,
-      number: PropTypes.string,
-      key: PropTypes.string,
-    })
-  ),
 };
 
 export default ContactForm;
