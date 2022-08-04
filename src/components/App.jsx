@@ -30,7 +30,7 @@ const App = () => {
           justifyContent="center"
           as="div"
         >
-          <h2>Contacts</h2>
+          
           <ContactList />
         </Box>
       </Container>

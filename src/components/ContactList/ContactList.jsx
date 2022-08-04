@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Contact } from 'components/Contact/Contact';
-import { ContactListComponent } from './ContactList.styled';
+import { ContactListComponent , ContactsListHeader} from './ContactList.styled';
 
 export const ContactList = () => {
   const contacts = useSelector(state => state.contacts.items);
@@ -14,11 +14,16 @@ export const ContactList = () => {
     );
   }
 
+  if (!filteredItems.length) { return null };
+
   return (
-    <ContactListComponent>
-      {filteredItems.map(({ id, name, number }) => {
-        return <Contact key={id} id={id} name={name} number={number} />;
-      })}
-    </ContactListComponent>
+    <>
+      <ContactsListHeader>Contacts</ContactsListHeader>
+      <ContactListComponent>
+        {filteredItems.map(({ id, name, number }) => {
+          return <Contact key={id} id={id} name={name} number={number} />;
+        })}
+      </ContactListComponent>
+    </>
   );
 };

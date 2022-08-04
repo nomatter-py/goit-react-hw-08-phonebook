@@ -11,7 +11,7 @@ export const Contact = ({ id, name, number }) => {
     <ContactItem>
       <div>
         <div>{name}</div>
-        <div>{number}</div>
+        <a href={`tel:${number}`}>{number}</a>
       </div>
       <Button type="button" onClick={() => dispatch(actions.deleteContact(id))}>
         <AiOutlineClose/>
