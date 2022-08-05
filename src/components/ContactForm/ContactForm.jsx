@@ -3,6 +3,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Box } from 'components/Box/Box';
 import { Input, Button, Form } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
+import { getItems } from 'redux/contacts/contacts-selectors';
 import actions from '../../redux/contacts/contacts-actions';
 
 const existsInContacts = (name, contacts) => {
@@ -13,7 +14,7 @@ const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.items);
+  const contacts = useSelector(getItems);
 
   const handleChange = evt => {
     const { name, value } = evt.target;
@@ -40,7 +41,7 @@ const ContactForm = () => {
     setNumber('');
   };
 
-  //const { name, number } = this.state;
+  
   return (
     <Form autoComplete="off" onSubmit={handleSubmit}>
       <Box
