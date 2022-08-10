@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 import { ContactItem, Button } from './Contact.styled';
 import { AiOutlineClose } from 'react-icons/ai';
-import { removeContact } from 'redux/contacts/contacts-operations';
+import { removeContact } from 'redux/contacts/contacts-slice';
 
 
 export const Contact = ({ id, name, number }) => {

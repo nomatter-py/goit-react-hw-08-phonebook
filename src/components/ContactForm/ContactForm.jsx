@@ -4,7 +4,7 @@ import { Box } from 'components/Box/Box';
 import { Input, Button, Form } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems } from 'redux/contacts/contacts-selectors';
-import { postContact } from 'redux/contacts/contacts-operations';
+import { postContact } from 'redux/contacts/contacts-slice';
 
 const existsInContacts = (name, contacts) => {
   return contacts.find(contact => contact.name === name);

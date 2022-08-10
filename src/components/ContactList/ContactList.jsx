@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getVisibleItems } from 'redux/contacts/contacts-selectors';
 import { Contact } from 'components/Contact/Contact';
 import { ContactListComponent, ContactsListHeader } from './ContactList.styled';
-import { fetchContacts } from 'redux/contacts/contacts-operations';
+import { fetchContacts } from 'redux/contacts/contacts-slice';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
