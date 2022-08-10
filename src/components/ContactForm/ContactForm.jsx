@@ -4,7 +4,7 @@ import { Box } from 'components/Box/Box';
 import { Input, Button, Form } from './ContactForm.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems } from 'redux/contacts/contacts-selectors';
-import actions from '../../redux/contacts/contacts-actions';
+import { postContact } from 'redux/contacts/contacts-operations';
 
 const existsInContacts = (name, contacts) => {
   return contacts.find(contact => contact.name === name);
@@ -29,7 +29,7 @@ const ContactForm = () => {
     evt.preventDefault();
 
     if (!existsInContacts(name, contacts)) {
-      dispatch(actions.addContact({ name, number }));
+      dispatch(postContact({ name, number }));
       reset();
     } else {
       Notify.failure(`${name} is already in contacts`);
@@ -41,7 +41,6 @@ const ContactForm = () => {
     setNumber('');
   };
 
-  
   return (
     <Form autoComplete="off" onSubmit={handleSubmit}>
       <Box
