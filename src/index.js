@@ -13,6 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <Provider store={store}>
+        {console.log(store.getState())}
         <App />
       </Provider>
     </ThemeProvider>

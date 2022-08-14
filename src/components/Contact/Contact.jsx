@@ -1,21 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
 import { ContactItem, Button } from './Contact.styled';
 import { AiOutlineClose } from 'react-icons/ai';
-import { removeContact } from 'redux/contacts/contacts-slice';
-
+import { useDeleteContactMutation } from 'redux/contacts/contacts-api';
 
 export const Contact = ({ id, name, number }) => {
-  const dispatch = useDispatch();
+
+  const [deleteContact] = useDeleteContactMutation();
+  const handleDelete = async id => {
+    await deleteContact(id);
+  };
+
   return (
     <ContactItem>
       <div>
         <div>{name}</div>
         <a href={`tel:${number}`}>{number}</a>
       </div>
-      <Button type="button" onClick={() => dispatch(removeContact(id))}>
-        <AiOutlineClose/>
+      <Button type="button" onClick={() => handleDelete(id)}>
+        <AiOutlineClose />
       </Button>
     </ContactItem>
   );

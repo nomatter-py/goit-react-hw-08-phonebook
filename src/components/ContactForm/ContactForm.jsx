@@ -2,9 +2,10 @@ import { useState } from 'react';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Box } from 'components/Box/Box';
 import { Input, Button, Form } from './ContactForm.styled';
-import { useDispatch, useSelector } from 'react-redux';
-import { getItems } from 'redux/contacts/contacts-selectors';
-import { postContact } from 'redux/contacts/contacts-slice';
+import {
+  useGetContactsQuery,
+  useAddContactMutation,
+} from 'redux/contacts/contacts-api';
 
 const existsInContacts = (name, contacts) => {
   return contacts.find(contact => contact.name === name);
@@ -13,8 +14,13 @@ const existsInContacts = (name, contacts) => {
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const dispatch = useDispatch();
-  const contacts = useSelector(getItems);
+  const { data = [] } = useGetContactsQuery();
+  const [ addContact ] = useAddContactMutation();
+
+  const handleAddContact = async contact => {
+    await addContact(contact).unwrap();
+    console.log(contact);
+  };
 
   const handleChange = evt => {
     const { name, value } = evt.target;
@@ -28,8 +34,8 @@ const ContactForm = () => {
   const handleSubmit = evt => {
     evt.preventDefault();
 
-    if (!existsInContacts(name, contacts)) {
-      dispatch(postContact({ name, number }));
+    if (!existsInContacts(name, data)) {
+      handleAddContact({ name, number });
       reset();
     } else {
       Notify.failure(`${name} is already in contacts`);

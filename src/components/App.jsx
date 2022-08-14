@@ -5,7 +5,10 @@ import { Filter } from './Filter/Filter';
 import { Box } from './Box/Box';
 import { Container } from './App.styled';
 
+
 const App = () => {
+
+
   return (
     <Box position="relative" as="main">
       <GlobalStyle />
@@ -19,8 +22,8 @@ const App = () => {
           as="div"
         >
           <h1>Phonebook</h1>
-          <MyForm />
-          <Filter />
+          <MyForm /> 
+          <Filter /> 
         </Box>
         <Box
           p={5}
@@ -30,7 +33,6 @@ const App = () => {
           justifyContent="center"
           as="div"
         >
-          
           <ContactList />
         </Box>
       </Container>
