@@ -2,7 +2,7 @@
   "name": "react-homework-template",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://nomatter-py.github.io/goit-react-hw-07-phonebook-rtk_qery/",
+  "homepage": "https://nomatter-py.github.io/goit-react-hw-07-phonebook-rtk_query/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.3",
     "@testing-library/jest-dom": "^5.16.3",
