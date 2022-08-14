@@ -5,7 +5,7 @@ export const Form = styled.form`
   flex-direction: column;
   width: 100%;
 
-   label {
+  label {
     display: inline-block;
     min-width: 110px;
   }
@@ -18,6 +18,10 @@ export const Input = styled.input`
 `;
 
 export const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
   padding: 10px;
   color: #fff;
   background-color: ${p => p.theme.colors.primary};

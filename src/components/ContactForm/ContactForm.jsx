@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Box } from 'components/Box/Box';
+import { AiOutlineUserAdd } from 'react-icons/ai';
 import { Input, Button, Form } from './ContactForm.styled';
 import {
   useGetContactsQuery,
@@ -15,7 +16,7 @@ const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const { data = [] } = useGetContactsQuery();
-  const [ addContact ] = useAddContactMutation();
+  const [addContact] = useAddContactMutation();
 
   const handleAddContact = async contact => {
     await addContact(contact).unwrap();
@@ -85,7 +86,10 @@ const ContactForm = () => {
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
         />
       </Box>
-      <Button type="submit">Add contact</Button>
+      <Button type="submit">
+        <AiOutlineUserAdd />
+        <span>Add contact</span>
+      </Button>
     </Form>
   );
 };
