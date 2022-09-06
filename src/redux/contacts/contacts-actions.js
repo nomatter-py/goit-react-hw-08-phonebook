@@ -1,7 +1,7 @@
-import { addContact, deleteContact, changeFilter } from './contacts-slice';
+import { changeFilter } from './filter-slice';
 
 
 
-const combined = { addContact, deleteContact, changeFilter };
+const combined = { changeFilter };
 
 export default combined;

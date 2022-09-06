@@ -1,41 +1,90 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const contactsAPI = createApi({
-  reducerPath: 'contactsApi',
+   reducerPath: 'contactsApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://62ef9d6e57311485d124defe.mockapi.io/api/contacts/',
+    baseUrl: 'https://connections-api.herokuapp.com',
+    prepareHeaders: (headers, { getState }) => {
+      const token = getState().auth.token;
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
+  tagTypes: ['Contacts'],
   endpoints: build => ({
+    getCurrentUser: build.query({
+      query: () => '/users/current',
+    }),
+    signup: build.mutation({
+      query: credentials => ({
+        url: '/users/signup',
+        method: 'POST',
+        body: credentials,
+      }),
+    }),
+    login: build.mutation({
+      query: credentials => ({
+        url: '/users/login',
+        method: 'POST',
+        body: credentials,
+      }),
+    }),
+    logout: build.mutation({
+      query: () => ({
+        url: '/users/logout',
+        method: 'POST',
+      }),
+    }),
+    refresh: build.query({
+      query: () => ({
+        url: '/users/current',
+        method: 'GET',
+      }),
+    }),
     getContacts: build.query({
-      query: () => '',
-      providesTags: result =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: 'Contacts', id })),
-              { type: 'Contacts', id: 'LIST' },
-            ]
-          : [{ type: 'Contacts', id: 'LIST' }],
+      query: () => '/contacts',
+      providesTags: ['Contacts'],
     }),
     addContact: build.mutation({
-      query: body => ({
-        url: '',
+      query: newContact => ({
+        url: '/contacts',
         method: 'POST',
-        body,
+        body: newContact,
       }),
-      invalidatesTags: [{ type: 'Contacts', id: 'LIST' }],
+      invalidatesTags: ['Contacts'],
     }),
     deleteContact: build.mutation({
-      query: id => ({
-        url: `${id}`,
+      query: contactId => ({
+        url: `/contacts/${contactId}`,
         method: 'DELETE',
       }),
-      invalidatesTags: [{ type: 'Contacts', id: 'LIST' }],
+      invalidatesTags: ['Contacts'],
+    }),
+    updateContact: build.mutation({
+      query: ({ id, ...patch }) => {
+        console.log(id);
+        console.log(patch);
+        return {
+          url: `/contacts/${id}`,
+          method: 'PATCH',
+          body: patch,
+        };
+      },
+      invalidatesTags: ['Contacts'],
     }),
   }),
 });
 
 export const {
+  useSignupMutation,
+  useLoginMutation,
+  useLogoutMutation,
+  useRefreshQuery,
   useGetContactsQuery,
   useAddContactMutation,
   useDeleteContactMutation,
+  useUpdateContactMutation,
+  useGetCurrentUserQuery,
 } = contactsAPI;

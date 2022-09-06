@@ -1,42 +1,62 @@
-import { GlobalStyle } from './GlobalStyle/GlobalStyle';
-import MyForm from './ContactForm/ContactForm';
-import { ContactList } from './ContactList/ContactList';
-import { Filter } from './Filter/Filter';
-import { Box } from './Box/Box';
-import { Container } from './App.styled';
+import { Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Layout } from './Layout/Layout';
+import { LoginPage } from "../pages/LoginPage";
+import { ContactsPage } from "../pages/ContactsPage";
+import { SignUpPage } from "../pages/SignUpPage";
+import PrivateRoute from '../routes/PrivateRoute';
+import PublicRoute from '../routes/PublicRoute';
+import { authSelectors } from "redux/auth/auth-slice";
+import { useGetCurrentUserQuery } from "redux/contacts/contacts-api";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const App = () => {
 
+  const hasToken = useSelector(authSelectors.getToken);
+  const { isLoading } = useGetCurrentUserQuery
+    (undefined, {
+    skip: !hasToken,
+    });
+  
+  if (isLoading) {
+    return null;
+  }
 
   return (
-    <Box position="relative" as="main">
-      <GlobalStyle />
-      <Container>
-        <Box
-          pt={6}
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-          as="div"
-        >
-          <h1>Phonebook</h1>
-          <MyForm /> 
-          <Filter /> 
-        </Box>
-        <Box
-          p={5}
-          display="flex"
-          flexDirection="column"
-          alignItems="center"
-          justifyContent="center"
-          as="div"
-        >
-          <ContactList />
-        </Box>
-      </Container>
-    </Box>
+    
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<Navigate to="/login"/>}/>
+       <Route
+          path="/register"
+          element={
+            <PublicRoute
+              restricted
+              redirectTo="/todos"
+              component={<SignUpPage />}
+            />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute
+              restricted
+              redirectTo="/contacts"
+              component={<LoginPage />}
+            />
+          }
+        />
+        <Route
+          path="/contacts"
+          element={
+            <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
+          }
+        />
+      </Route>
+    </Routes>
+    
   );
 };
 

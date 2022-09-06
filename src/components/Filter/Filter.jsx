@@ -1,16 +1,20 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import actions from '../../redux/contacts/contacts-actions';
-import { FilterBox, FilterInput } from './Filter.styled';
+import {change} from '../../redux/contacts/filter-slice';
+import { TextField, Container } from '@mui/material';
 
 export const Filter = () => {
   const dispatch = useDispatch();
   return (
-    <FilterBox>
-      <h2>Find contacts by name</h2>
-      <FilterInput onChange={e => dispatch(actions.changeFilter(e.target.value))} />
-    </FilterBox>
+    <Container>
+      <TextField
+        sx={{ mb: '1rem' }}
+        label="Filter"
+        variant="standard"
+        type="text"
+        name="filter"
+        onChange={e => dispatch(change(e.target.value))}
+      />
+    </Container>
   );
-}
-
-
+};
